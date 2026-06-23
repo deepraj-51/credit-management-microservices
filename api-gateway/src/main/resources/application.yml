@@ -20,6 +20,10 @@ spring:
           predicates:
             - Path=/credits/**
 
+jwt:
+  secret: mySuperSecretKeyForJwtAuthentication123456789
+
+
 eureka:
   client:
     service-url:

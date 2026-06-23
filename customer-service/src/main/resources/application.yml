@@ -1,0 +1,23 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: CUSTOMER-SERVICE
+  datasource:
+    url: jdbc:postgresql://localhost:5432/customer_service
+    username: postgres
+    password: my@62post67
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

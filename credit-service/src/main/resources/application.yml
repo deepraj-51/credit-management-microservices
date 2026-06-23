@@ -1,5 +1,9 @@
 spring:
   application:
     name: credit-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/credit_service
+    username: postgres
+    password: my@62post67
   config:
     import: optional:configserver:http://localhost:8888

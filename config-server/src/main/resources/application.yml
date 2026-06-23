@@ -8,4 +8,4 @@ spring:
     config:
       server:
         git:
-          uri: file:///E:/Projects/1-microservice-project/config-repo
+          uri: file:///E:/Projects/microservices/config-repo

@@ -1,5 +1,12 @@
 spring:
   application:
     name: api-gateway
+  datasource:
+    url: jdbc:postgresql://localhost:5432/auth_service
+    username: postgres
+    password: my@62post67
   config:
     import: optional:configserver:http://localhost:8888
+
+jwt:
+  secret: mySuperSecretKeyForJwtAuthentication123456789

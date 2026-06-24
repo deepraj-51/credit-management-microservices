@@ -8,4 +8,4 @@ spring:
     config:
       server:
         git:
-          uri: file:///E:/Projects/microservices/config-repo
+          uri: https://github.com/deepraj-51/config-repo.git

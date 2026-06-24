@@ -1,0 +1,101 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./postgres/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - microservices-network
+
+  config-server:
+    image: config-server
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - microservices-network
+
+  discovery-server:
+    image: discovery-server
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    networks:
+      - microservices-network
+
+  auth-service:
+    image: auth-service
+    container_name: auth-service
+    ports:
+      - "8081:8081"
+    environment:
+      DB_USERNAME: ${db_username}
+      DB_PASSWORD: ${db_password}
+      AUTH_DB_URL: ${auth_db_url}
+    depends_on:
+      - postgres
+      - config-server
+      - discovery-server
+    networks:
+      - microservices-network
+
+  customer-service:
+    image: customer-service
+    container_name: customer-service
+    ports:
+      - "8082:8082"
+    environment:
+      DB_USERNAME: ${db_username}
+      DB_PASSWORD: ${db_password}
+      CUSTOMER_DB_URL: ${customer_db_url}
+    depends_on:
+      - postgres
+      - config-server
+      - discovery-server
+    networks:
+      - microservices-network
+
+  credit-service:
+    image: credit-service
+    container_name: credit-service
+    ports:
+      - "8083:8083"
+    environment:
+      DB_USERNAME: ${db_username}
+      DB_PASSWORD: ${db_password}
+      CREDIT_DB_URL: ${credit_db_url}
+    depends_on:
+      - postgres
+      - config-server
+      - discovery-server
+    networks:
+      - microservices-network
+
+  api-gateway:
+    image: api-gateway
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - config-server
+      - discovery-server
+      - auth-service
+      - customer-service
+      - credit-service
+    networks:
+      - microservices-network
+
+volumes:
+  postgres-data:
+
+networks:
+  microservices-network:
+    driver: bridge

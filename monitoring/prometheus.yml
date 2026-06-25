@@ -1,0 +1,52 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+
+  - job_name: "customer-service"
+
+    metrics_path: "/actuator/prometheus"
+
+    static_configs:
+      - targets:
+          - "customer-service:8082"
+
+  - job_name: "auth-service"
+
+    metrics_path: "/actuator/prometheus"
+
+    static_configs:
+      - targets:
+          - "auth-service:8081"
+
+  - job_name: "credit-service"
+
+    metrics_path: "/actuator/prometheus"
+
+    static_configs:
+      - targets:
+          - "credit-service:8083"
+
+  - job_name: "api-gateway"
+
+    metrics_path: "/actuator/prometheus"
+
+    static_configs:
+      - targets:
+          - "api-gateway:8080"
+
+  - job_name: "config-server"
+
+    metrics_path: "/actuator/prometheus"
+
+    static_configs:
+      - targets:
+          - "config-server:8888"
+
+  - job_name: "discovery-server"
+
+    metrics_path: "/actuator/prometheus"
+
+    static_configs:
+      - targets:
+          - "discovery-server:8761"
